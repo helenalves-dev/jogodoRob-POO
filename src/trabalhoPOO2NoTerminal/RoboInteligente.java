@@ -24,22 +24,13 @@ public class RoboInteligente extends Robo{
 		do{
 			escolha=gerarAção();
 		}while(movimentosAnteriores.contains(escolha));
-		int x=getPosicaoX();
-		int y=getPosicaoY();
-		switch(escolha){
-		case 1:
-			y++;
-			break;
-		case 2:
-			y--;
-			break;
-		case 3:
-			x++;
-			break;
-		case 4:
-			x--;
-			break;
-		}
+		Movimentos movimento = Movimentos.acao(escolha);
+		int[] novaPosicao = {-1,-1};
+        if (movimento != null) {
+            novaPosicao=movimento.mover(this);
+        }
+		int x=novaPosicao[0];
+        int y=novaPosicao[1];
 		if(x<0 || y<0){
 			movimentosAnteriores.add(escolha);
 			setMovimentosInvalidos(getMovimentosInvalidos()+1);
