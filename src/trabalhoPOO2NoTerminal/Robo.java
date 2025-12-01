@@ -99,19 +99,13 @@ public class Robo {
 		if (!getAtivo()) {
 			return;
 		}
-		int x=posicaoX;
-        int y=posicaoY;
-        if(escolha.toUpperCase()=="UP"){
-            y++;
-        }else if(escolha.toUpperCase()=="DOWN"){
-            y--;
-        }else if(escolha.toUpperCase()=="RIGHT"){
-            x++;
-        }else if(escolha.toUpperCase()=="LEFT"){
-            x--;
-        }else{
-            x=-1;
+		Movimentos movimento = Movimentos.acao(escolha);
+		int[] novaPosicao = {-1,-1};
+        if (movimento != null) {
+            novaPosicao=movimento.mover(this);
         }
+		int x=novaPosicao[0];
+        int y=novaPosicao[1];
         if(x<0 || y<0){
 			movimentosInvalidos++;
             throw new MovimentoInvalidoException();
@@ -131,19 +125,13 @@ public class Robo {
 		if (!getAtivo()) {
 			return;
 		}
-		int x=posicaoX;
-        int y=posicaoY;
-        if(escolha==1){
-            y++;
-        }else if(escolha==2){
-            y--;
-        }else if(escolha==3){
-            x++;
-        }else if(escolha==4){
-            x--;
-        }else{
-            x=-1;
+		Movimentos movimento = Movimentos.acao(escolha);
+		int[] novaPosicao = {-1,-1};
+        if (movimento != null) {
+            novaPosicao=movimento.mover(this);
         }
+		int x=novaPosicao[0];
+        int y=novaPosicao[1];
         if(x<0 || y<0){
 			movimentosInvalidos++;
             throw new MovimentoInvalidoException();
@@ -164,22 +152,13 @@ public class Robo {
 			return;
 		}
 		int escolha=gerarAção();
-		int x=getPosicaoX();
-		int y=getPosicaoY();
-		switch(escolha){
-		case 1:
-			y++;
-			break;
-		case 2:
-			y--;
-			break;
-		case 3:
-			x++;
-			break;
-		case 4:
-			x--;
-			break;
-		}
+		Movimentos movimento = Movimentos.acao(escolha);
+		int[] novaPosicao = {-1,-1};
+        if (movimento != null) {
+            novaPosicao=movimento.mover(this);
+        }
+		int x=novaPosicao[0];
+        int y=novaPosicao[1];
 		if(x<0 || y<0){
 			setMovimentosInvalidos(getMovimentosInvalidos()+1);
             throw new MovimentoInvalidoException();
