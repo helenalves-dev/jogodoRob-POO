@@ -6,24 +6,29 @@ public class RobosObstaculos implements ModoJogoStrategy {
     @Override
     public void executar() {
         Scanner scanner=new Scanner(System.in);
+        String tenteNovamenteString="Tente Novamente";
+        String indiceXString="Indice x: ";
+        String indiceYString="Indice y: ";
+        String digiteQuantidadeBombaString="Digite a quantidade de bombas(até 3): ";
         Robo roboBurro=new Robo(Texto.AZUL);
         RoboInteligente roboInteligente=new RoboInteligente(Texto.VERDE);
         Robo[] robos={roboBurro, roboInteligente};
         System.out.println("---Posição do Alimento---");
-        int x,y;
+        int x;
+        int y;
         boolean valido=false;
         Alimento comida=null;
         do{
             try{
-                System.out.print("Indice x: ");
+                System.out.print(indiceXString);
                 x=scanner.nextInt();
-                System.out.print("Indice y: ");
+                System.out.print(indiceYString);
                 y=scanner.nextInt();
                 comida=new Alimento(x, y);
                 valido=true;
             }catch(ForaDoLimiteGridException e){
                 System.out.println(e.getMessage());
-                System.out.println("Tente Novamente");
+                System.out.println(tenteNovamenteString);
             }
         }while(!valido);
         Grid grid=new Grid();
@@ -33,15 +38,15 @@ public class RobosObstaculos implements ModoJogoStrategy {
         int qtdRochas = scanner.nextInt();
         while (qtdRochas < 1 || qtdRochas > 3) {
             System.out.println("Valor inválido!");
-            System.out.print("Digite a quantidade de bombas(até 3): ");
+            System.out.print(digiteQuantidadeBombaString);
             qtdRochas = scanner.nextInt();
         }
 
-        System.out.print("Digite a quantidade de bombas(até 3): ");
+        System.out.print(digiteQuantidadeBombaString);
         int qtdBombas = scanner.nextInt();
         while (qtdBombas < 1 || qtdBombas > 3) {
             System.out.println("Valor inválido!");
-            System.out.print("Digite a quantidade de bombas(até 3): ");
+            System.out.print(digiteQuantidadeBombaString);
             qtdBombas = scanner.nextInt();
         }
         
@@ -51,47 +56,48 @@ public class RobosObstaculos implements ModoJogoStrategy {
             System.out.printf("---Posição da %d° Rocha---\n", i+1);
             do{
                 try{
-                    System.out.print("Indice x: ");
+                    System.out.print(indiceXString);
                     x=scanner.nextInt();
-                    System.out.print("Indice y: ");
+                    System.out.print(indiceYString);
                     y=scanner.nextInt();
                     if (Obstaculo.procurarObstaculo(x, y) == null && (comida.getPosicaoX() != x || comida.getPosicaoY() != y) && (x != 0 || y != 0)) {
                         valido = true;
                         rocha=new Rocha(1, x, y);
                     } else {
                         System.out.println("Já existe algo nessa posição");
-                        System.out.println("Tente Novamente");
+                        System.out.println(tenteNovamenteString);
                     }
                 }catch(ForaDoLimiteGridException e){
                     --i;
                     System.out.println(e.getMessage());
-                    System.out.println("Tente Novamente");
+                    System.out.println(tenteNovamenteString);
                 }
             }while(!valido);
             grid.mostrarGrid(robos, comida, Obstaculo.getObstaculos());
         }
-        for (int i = 0; i < qtdBombas; i++) {
+        int cont=0;
+        while(cont<qtdBombas){
             valido=false;
             Bomba bomba=null;
-            System.out.printf("---Posição da %d° bomba---\n", i+1);
+            System.out.printf("---Posição da %d° bomba---\n", cont+1);
             do{
                 try{
-                    System.out.print("Indice x: ");
+                    System.out.print(indiceXString);
                     x=scanner.nextInt();
-                    System.out.print("Indice y: ");
+                    System.out.print(indiceYString);
                     y=scanner.nextInt();
                     if (Obstaculo.procurarObstaculo(x, y) == null && (comida.getPosicaoX() != x || comida.getPosicaoY() != y) && (x != 0 || y != 0)) {
                         valido = true;
                         bomba=new Bomba(2, x, y);
                     } else {
                         System.out.println("Já existe algo nessa posição");
-                        System.out.println("Tente Novamente");
+                        System.out.println(tenteNovamenteString);
                     }
                 }catch(ForaDoLimiteGridException e){
-                    --i;
                     System.out.println(e.getMessage());
-                    System.out.println("Tente Novamente");
+                    System.out.println(tenteNovamenteString);
                 }
+                cont++;
             }while(!valido);
             grid.mostrarGrid(robos, comida, Obstaculo.getObstaculos());
         }
@@ -106,12 +112,9 @@ public class RobosObstaculos implements ModoJogoStrategy {
                 }
                 try{
                     robos[i].mover();
-                }catch(MovimentoInvalidoException e){
+                }catch(MovimentoInvalidoException|ForaDoLimiteGridException e){
                     System.out.println(e.getMessage());
-                    System.out.println("Tente Novamente");
-                }catch(ForaDoLimiteGridException e){
-                    System.out.println(e.getMessage());
-                    System.out.println("Tente Novamente");
+                    System.out.println(tenteNovamenteString);
                 }
                 grid.mostrarGrid(robos, comida, Obstaculo.getObstaculos());
                 System.out.println("Aperte ENTER para continuar: ");

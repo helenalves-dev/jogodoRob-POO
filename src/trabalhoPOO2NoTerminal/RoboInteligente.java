@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class RoboInteligente extends Robo{
 	private ArrayList<Integer> movimentosAnteriores = new ArrayList<>();
+	private Random random = new Random();
 
 	public RoboInteligente(String cor, int indiceX, int indiceY, int movimentosValidos, int movimentosInvalidos){
 		super(cor, indiceX, indiceY, movimentosValidos, movimentosInvalidos);
@@ -12,17 +13,15 @@ public class RoboInteligente extends Robo{
 	public RoboInteligente(String cor){
 		super(cor);
 	}
-	public int gerarAção(){
-		Random random = new Random();
-		return random.nextInt(4)+1;
-	}
+
+	@Override
 	public void mover() throws MovimentoInvalidoException, ForaDoLimiteGridException{
 		if (!getAtivo()) {
 			return;
 		}
 		int escolha;
 		do{
-			escolha=gerarAção();
+			escolha=random.nextInt(4)+1;
 		}while(movimentosAnteriores.contains(escolha));
 		Movimentos movimento = Movimentos.acao(escolha);
 		int[] novaPosicao = {-1,-1};

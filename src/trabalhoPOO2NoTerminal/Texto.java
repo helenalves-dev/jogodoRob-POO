@@ -1,6 +1,11 @@
 package trabalhoPOO2NoTerminal;
 
 public class Texto {
+
+    private Texto() {
+        // Construtor privado para evitar instanciação
+    }
+
     public static final String RESET = "\u001B[0m";
     public static final String VERMELHO = "\u001B[31m";
     public static final String VERDE = "\u001B[32m";

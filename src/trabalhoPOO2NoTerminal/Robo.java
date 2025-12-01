@@ -11,6 +11,7 @@ public class Robo {
 	private int movimentosValidos;
 	private int movimentosInvalidos;
 	private boolean ativo=true;
+	private Random random = new Random();
 
 	public Robo(String cor, int indiceX, int indiceY, int movimentosValidos, int movimentosInvalidos){
 		this.cor=cor;
@@ -89,11 +90,6 @@ public class Robo {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-
-	public int gerarAção(){
-		Random random = new Random();
-		return random.nextInt(4)+1;
-	}
 	
 	public void mover(String escolha) throws MovimentoInvalidoException, ForaDoLimiteGridException{
 		if (!getAtivo()) {
@@ -151,7 +147,7 @@ public class Robo {
 		if (!getAtivo()) {
 			return;
 		}
-		int escolha=gerarAção();
+		int escolha=random.nextInt(4)+1;
 		Movimentos movimento = Movimentos.acao(escolha);
 		int[] novaPosicao = {-1,-1};
         if (movimento != null) {

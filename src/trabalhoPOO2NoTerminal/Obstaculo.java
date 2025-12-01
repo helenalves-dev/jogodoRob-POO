@@ -8,7 +8,7 @@ public abstract class Obstaculo{
    private int posicaoX;
    private int posicaoY;
 
-    public Obstaculo(int id, int indiceX, int indiceY) throws ForaDoLimiteGridException{
+   protected Obstaculo(int id, int indiceX, int indiceY) throws ForaDoLimiteGridException{
         this.id=id;
         if (indiceX <= 4 && indiceY <= 4 && indiceX >=0 && indiceY >= 0) {
          this.posicaoX = indiceX;
@@ -19,15 +19,15 @@ public abstract class Obstaculo{
       }
     }
 
-    public int getId(){
+   public int getId(){
         return id;
     }
 
-    public void setId(int id){
-        this.id=id;
+   public void setId(int id){
+      this.id=id;
     }
 
-    public int getPosicaoX() {
+   public int getPosicaoX() {
       return this.posicaoX;
    }
 
